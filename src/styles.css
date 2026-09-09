@@ -19,6 +19,8 @@
  */
 
 @theme inline {
+  --font-sans: var(--font-body);
+  --font-display: var(--font-heading);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -59,29 +61,39 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+  --color-canopy: var(--canopy);
+  --color-primary-glow: var(--primary-glow);
+  --shadow-soft: var(--shadow-soft);
+  --shadow-jungle: var(--shadow-jungle);
 }
 
 :root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.129 0.042 264.695);
+  --radius: 0.75rem;
+  --font-heading: "Fredoka", ui-rounded, system-ui, sans-serif;
+  --font-body: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  --background: oklch(0.968 0.018 92);
+  --foreground: oklch(0.245 0.035 142);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.129 0.042 264.695);
+  --card-foreground: oklch(0.245 0.035 142);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.129 0.042 264.695);
-  --primary: oklch(0.208 0.042 265.755);
-  --primary-foreground: oklch(0.984 0.003 247.858);
-  --secondary: oklch(0.968 0.007 247.896);
-  --secondary-foreground: oklch(0.208 0.042 265.755);
-  --muted: oklch(0.968 0.007 247.896);
-  --muted-foreground: oklch(0.554 0.046 257.417);
-  --accent: oklch(0.968 0.007 247.896);
-  --accent-foreground: oklch(0.208 0.042 265.755);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: oklch(0.929 0.013 255.508);
-  --input: oklch(0.929 0.013 255.508);
-  --ring: oklch(0.704 0.04 256.788);
+  --popover-foreground: oklch(0.245 0.035 142);
+  --primary: oklch(0.645 0.157 46);
+  --primary-glow: oklch(0.84 0.112 84);
+  --primary-foreground: oklch(0.985 0.009 95);
+  --secondary: oklch(0.73 0.104 146);
+  --secondary-foreground: oklch(0.27 0.07 145);
+  --muted: oklch(0.93 0.026 111);
+  --muted-foreground: oklch(0.5 0.034 120);
+  --accent: oklch(0.89 0.08 92);
+  --accent-foreground: oklch(0.31 0.063 139);
+  --destructive: oklch(0.62 0.19 29);
+  --destructive-foreground: oklch(0.985 0.009 95);
+  --border: oklch(0.865 0.034 102);
+  --input: oklch(0.84 0.035 105);
+  --ring: oklch(0.645 0.157 46);
+  --canopy: oklch(0.275 0.073 145);
+  --shadow-soft: 0 14px 36px -26px oklch(0.27 0.07 145 / 0.42);
+  --shadow-jungle: 0 26px 60px -30px oklch(0.2 0.07 145 / 0.62);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -140,5 +152,31 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    font-family: var(--font-body);
+    letter-spacing: 0;
   }
+
+  button, a, input, select { letter-spacing: 0; }
+}
+
+@utility font-display { font-family: var(--font-heading); }
+
+.bg-hero-shade { background: linear-gradient(90deg, oklch(0.16 0.06 145 / .94) 0%, oklch(0.2 0.06 145 / .77) 42%, transparent 78%); }
+.bg-community-shade { background: linear-gradient(0deg, oklch(0.16 0.06 145 / .9), transparent 75%); }
+.jungle-canopy { position: fixed; inset: 72px 0 auto 0; height: 220px; overflow: hidden; pointer-events: none; opacity: .08; z-index: 0; }
+.jungle-canopy i { position: absolute; width: 110px; height: 55px; border-radius: 100% 0 100% 0; background: var(--canopy); transform: rotate(25deg); animation: leaf-sway 8s ease-in-out infinite; }
+.jungle-canopy i:nth-child(1) { left: -20px; top: 12px; }.jungle-canopy i:nth-child(2) { right: 8%; top: 30px; animation-delay: -2s; }.jungle-canopy i:nth-child(3) { left: 28%; top: -30px; animation-delay: -4s; }.jungle-canopy i:nth-child(4) { right: -30px; top: -10px; animation-delay: -6s; }
+.leaf { position: absolute; width: 120px; height: 60px; border-radius: 100% 0 100% 0; background: var(--secondary); opacity: .45; animation: leaf-sway 7s ease-in-out infinite; }
+.leaf-one { right: 8%; top: -22px; transform: rotate(28deg); }.leaf-two { right: 32%; bottom: -34px; transform: rotate(-18deg); animation-delay: -3s; }
+
+@keyframes leaf-sway { 0%, 100% { transform: rotate(20deg) translateY(0); } 50% { transform: rotate(13deg) translateY(8px); } }
+@keyframes fade-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+.animate-fade-in { animation: fade-in .4s ease-out both; }
+
+@media (max-width: 640px) {
+  .bg-hero-shade { background: linear-gradient(0deg, oklch(0.15 0.06 145 / .96), oklch(0.18 0.06 145 / .22) 85%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; }
 }
